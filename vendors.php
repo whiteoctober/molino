@@ -7,9 +7,9 @@ if (!is_dir($vendorDir = __DIR__.'/vendor')) {
 }
 
 $revs = array(
-    'doctrine-common' => isset($_SERVER['DOCTRINE_COMMON_REV']) ? $_SERVER['DOCTRINE_COMMON_REV'] : 'origin/master',
-    'doctrine-dbal'   => isset($_SERVER['DOCTRINE_DBAL_REV']) ? $_SERVER['DOCTRINE_DBAL_REV'] : 'origin/master',
-    'doctrine-orm'    => isset($_SERVER['DOCTRINE_ORM_REV']) ? $_SERVER['DOCTRINE_ORM_REV'] : 'origin/master',
+    'doctrine-common' => isset($_SERVER['DOCTRINE_COMMON_REV']) ? $_SERVER['DOCTRINE_COMMON_REV'] : 'origin/2.2',
+    'doctrine-dbal'   => isset($_SERVER['DOCTRINE_DBAL_REV']) ? $_SERVER['DOCTRINE_DBAL_REV'] : 'origin/2.2',
+    'doctrine-orm'    => isset($_SERVER['DOCTRINE_ORM_REV']) ? $_SERVER['DOCTRINE_ORM_REV'] : 'origin/2.2',
 );
 
 $deps = array(
