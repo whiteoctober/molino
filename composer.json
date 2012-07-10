@@ -1,0 +1,20 @@
+{
+    "name": "pablodip/molino",
+    "type": "library",
+    "description": "Small and fast library to make reusable tools persistence backend agnostic.",
+    "keywords": ["backend"],
+    "homepage": "https://github.com/pablodip/molino",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pablo Díez",
+            "email": "pablodip@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2"
+    },
+    "autoload": {
+        "psr-0": { "Molino": "src" }
+    }
+}
