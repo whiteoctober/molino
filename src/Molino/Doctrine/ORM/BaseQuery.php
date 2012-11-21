@@ -99,7 +99,10 @@ abstract class BaseQuery extends BaseBaseQuery
      */
     public function filterIn($field, array $values)
     {
-        $this->andWhere('IN', $field, $values);
+        $parameterId = $this->generateParameterId();
+        $rootAlias = $this->getQueryBuilder()->getRootAlias();
+        $this->getQueryBuilder()->andWhere($this->getQueryBuilder()->expr()->in(sprintf('%s.%s', $rootAlias, $field), '?' . $parameterId));
+        $this->getQueryBuilder()->setParameter($parameterId, $values);
 
         return $this;
     }
@@ -109,7 +112,10 @@ abstract class BaseQuery extends BaseBaseQuery
      */
     public function filterNotIn($field, array $values)
     {
-        $this->andWhere('NOT IN', $field, $values);
+        $parameterId = $this->generateParameterId();
+        $rootAlias = $this->getQueryBuilder()->getRootAlias();
+        $this->getQueryBuilder()->andWhere($this->getQueryBuilder()->expr()->notIn(sprintf('%s.%s', $rootAlias, $field), '?' . $parameterId));
+        $this->getQueryBuilder()->setParameter($parameterId, $values);
 
         return $this;
     }
