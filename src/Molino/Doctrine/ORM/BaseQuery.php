@@ -100,8 +100,7 @@ abstract class BaseQuery extends BaseBaseQuery
     public function filterIn($field, array $values)
     {
         $parameterId = $this->generateParameterId();
-        $rootAlias = $this->getQueryBuilder()->getRootAlias();
-        $this->getQueryBuilder()->andWhere($this->getQueryBuilder()->expr()->in(sprintf('%s.%s', $rootAlias, $field), '?' . $parameterId));
+        $this->getQueryBuilder()->andWhere($this->getQueryBuilder()->expr()->in($this->formatField($field), '?' . $parameterId));
         $this->getQueryBuilder()->setParameter($parameterId, $values);
 
         return $this;
@@ -113,8 +112,7 @@ abstract class BaseQuery extends BaseBaseQuery
     public function filterNotIn($field, array $values)
     {
         $parameterId = $this->generateParameterId();
-        $rootAlias = $this->getQueryBuilder()->getRootAlias();
-        $this->getQueryBuilder()->andWhere($this->getQueryBuilder()->expr()->notIn(sprintf('%s.%s', $rootAlias, $field), '?' . $parameterId));
+        $this->getQueryBuilder()->andWhere($this->getQueryBuilder()->expr()->notIn($this->formatField($field), '?' . $parameterId));
         $this->getQueryBuilder()->setParameter($parameterId, $values);
 
         return $this;
@@ -173,8 +171,7 @@ abstract class BaseQuery extends BaseBaseQuery
     private function andWhere($comparison, $field, $value)
     {
         $parameterId = $this->generateParameterId();
-        $rootAlias = $this->getQueryBuilder()->getRootAlias();
-        $this->getQueryBuilder()->andWhere(sprintf('%s.%s %s ?%d', $rootAlias, $field, $comparison, $parameterId));
+        $this->getQueryBuilder()->andWhere(sprintf('%s %s ?%d', $this->formatField($field), $comparison, $parameterId));
         $this->getQueryBuilder()->setParameter($parameterId, $value);
     }
 
@@ -189,5 +186,21 @@ abstract class BaseQuery extends BaseBaseQuery
         }, $this->parseLike($value));
 
         return implode('', $parsed);
+    }
+
+    private function getRootAlias()
+    {
+        $aliases = $this->getQueryBuilder()->getRootAliases();
+
+        return $aliases[0];
+    }
+
+    private function formatField($field)
+    {
+        if (strpos($field, ".") === false) {
+            return $this->getRootAlias() . '.' . $field;
+        }
+
+        return $field;
     }
 }
