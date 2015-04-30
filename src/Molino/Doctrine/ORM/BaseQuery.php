@@ -24,6 +24,14 @@ abstract class BaseQuery extends BaseBaseQuery
     private $queryBuilder;
     private $lastParameterId = 0;
 
+    public function __clone()
+    {
+        if ($this->queryBuilder !== null) {
+            $copy = clone $this->queryBuilder;
+            $this->queryBuilder = $copy;
+        }
+    }
+
     /**
      * Returns the query builder.
      *
